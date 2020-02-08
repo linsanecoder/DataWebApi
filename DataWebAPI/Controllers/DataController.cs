@@ -26,6 +26,12 @@ namespace MenuWebAPI.Controllers
 			_logger = logger;
 		}
 
+		[HttpGet]
+		public string Get()
+		{
+			return "https://localhost:44320/data/menu;https://localhost:44320/data/weather";
+		}
+
 		[HttpGet("weather")]
 		[EnableCors]
 		public string GetWeather()
@@ -56,7 +62,7 @@ namespace MenuWebAPI.Controllers
 				Name = "Food Name " + index.ToString(),
 				Description = "Food Name " + index.ToString(),
 				Picture = "Classic-Burger-508441287-200x200.jpg",
-				Price = Convert.ToDecimal(index * 10 % 15 + 10) + (Convert.ToDecimal(new Random().Next() % 100) / 10)
+				Price = Convert.ToDecimal(rng.Next(9, 28)) + (Convert.ToDecimal(rng.Next(1,99)) / 10)
 			})
 			.ToList();
 
