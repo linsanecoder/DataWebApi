@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Cors;
 using System.Text.Json;
+using MenuWebAPI.Models;
 
 namespace MenuWebAPI.Controllers
 {
@@ -25,9 +26,9 @@ namespace MenuWebAPI.Controllers
 			_logger = logger;
 		}
 
-		[HttpGet]
+		[HttpGet("weather")]
 		[EnableCors]
-		public string Get()
+		public string GetWeather()
 		{
 			var rng = new Random();
 
@@ -40,7 +41,26 @@ namespace MenuWebAPI.Controllers
 			})
 			.ToList();
 
-			return JsonSerializer.Serialize(result);			
+			return JsonSerializer.Serialize(result);
+		}
+
+		[HttpGet("menu")]
+		[EnableCors]
+		public string GetMenu()
+		{
+			var rng = new Random();
+
+			var result = Enumerable.Range(1, 5).Select(index => new FoodItem
+			{
+				ID = index,
+				Name = "Food Name " + index.ToString(),
+				Description = "Food Name " + index.ToString(),
+				Picture = "Classic-Burger-508441287-200x200.jpg",
+				Price = Convert.ToDecimal(index * 10 % 15 + 10) + (Convert.ToDecimal(new Random().Next() % 100) / 10)
+			})
+			.ToList();
+
+			return JsonSerializer.Serialize(result);
 		}
 	}
 }

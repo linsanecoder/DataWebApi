@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "MenuWebAPI": {
+    "DataWebAPI": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "data",
