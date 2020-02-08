@@ -10,8 +10,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using DataWebAPI.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 
-namespace MenuWebAPI
+namespace DataWebAPI
 {
 	public class Startup
 	{
@@ -25,6 +28,11 @@ namespace MenuWebAPI
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddEntityFrameworkSqlServer()
+				.AddDbContext<MenuDbContext>(options => 
+				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+				);
+
 			services.AddControllers();
 
 			services.AddCors(); // Make sure you call this previous to AddMvc

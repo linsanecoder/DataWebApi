@@ -1,6 +1,6 @@
 using System;
 
-namespace MenuWebAPI.Models
+namespace DataWebAPI.Models
 {
 	public class WeatherForecast
 	{

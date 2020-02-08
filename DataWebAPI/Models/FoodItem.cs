@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace MenuWebAPI.Models
+namespace DataWebAPI.Models
 {
 	public class FoodItem
 	{

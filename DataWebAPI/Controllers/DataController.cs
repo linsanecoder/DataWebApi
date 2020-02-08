@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Cors;
 using System.Text.Json;
-using MenuWebAPI.Models;
+using DataWebAPI.Models;
 
-namespace MenuWebAPI.Controllers
+namespace DataWebAPI.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
@@ -20,9 +20,11 @@ namespace MenuWebAPI.Controllers
 		  };
 
 		private readonly ILogger<DataController> _logger;
+		private readonly MenuDbContext _menuDb;
 
-		public DataController(ILogger<DataController> logger)
+		public DataController(MenuDbContext menuDbContext, ILogger<DataController> logger)
 		{
+			_menuDb = menuDbContext;
 			_logger = logger;
 		}
 
@@ -54,19 +56,28 @@ namespace MenuWebAPI.Controllers
 		[EnableCors]
 		public string GetMenu()
 		{
-			var rng = new Random();
+			IList<FoodItem> menuItems = new List<FoodItem>();
 
-			var result = Enumerable.Range(1, 5).Select(index => new FoodItem
+			using (var db = _menuDb)
 			{
-				ID = index,
-				Name = "Food Name " + index.ToString(),
-				Description = "Food Name " + index.ToString(),
-				Picture = "Classic-Burger-508441287-200x200.jpg",
-				Price = Convert.ToDecimal(rng.Next(9, 28)) + (Convert.ToDecimal(rng.Next(1,99)) / 10)
-			})
-			.ToList();
+				foreach (var f in db.FoodItems)
+				{
+					menuItems.Add(f);
+				}
+			}
+			//var rng = new Random();
 
-			return JsonSerializer.Serialize(result);
+			//var result = Enumerable.Range(1, 5).Select(index => new FoodItem
+			//{
+			//	ID = index,
+			//	Name = "Food Name " + index.ToString(),
+			//	Description = "Food Name " + index.ToString(),
+			//	Picture = "Classic-Burger-508441287-200x200.jpg",
+			//	Price = Convert.ToDecimal(rng.Next(9, 28)) + (Convert.ToDecimal(rng.Next(1,99)) / 10)
+			//})
+			//.ToList();
+
+			return JsonSerializer.Serialize(menuItems);
 		}
 	}
 }
