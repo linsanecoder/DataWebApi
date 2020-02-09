@@ -11,7 +11,7 @@ using DataWebAPI.Models;
 namespace DataWebAPI.Controllers
 {
 	[ApiController]
-	[Route("[controller]")]
+	[Route("")]
 	public class DataController : ControllerBase
 	{
 		private static readonly string[] Summaries = new[]
@@ -28,7 +28,7 @@ namespace DataWebAPI.Controllers
 			_logger = logger;
 		}
 
-		[HttpGet]
+		[HttpGet("data")]
 		public string Get()
 		{
 			return "https://localhost:44320/data/menu;https://localhost:44320/data/weather";
@@ -52,6 +52,7 @@ namespace DataWebAPI.Controllers
 			return JsonSerializer.Serialize(result);
 		}
 
+		[HttpGet]
 		[HttpGet("menu")]
 		[EnableCors]
 		public string GetMenu()
@@ -67,7 +68,7 @@ namespace DataWebAPI.Controllers
 			}
 			//var rng = new Random();
 
-			//var result = Enumerable.Range(1, 5).Select(index => new FoodItem
+			//var result = Enumerable.Range(1, 5).Select(index => new FoodIte
 			//{
 			//	ID = index,
 			//	Name = "Food Name " + index.ToString(),
